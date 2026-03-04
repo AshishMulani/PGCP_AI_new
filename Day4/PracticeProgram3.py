@@ -1,17 +1,17 @@
 # Q1. Define a function overlapping () that takes two lists and returns True if they have at
 # least one member in common, False otherwise.
 
-# def overlapping(l1,l2):
-#     flag=False
-#     for i in l1:
-#         for j in l2:
-#             if i==j:
-#                 flag=True
-#     return flag
-#
-# l1=[1,2,3,4,5]
-# l2=[7,9,6,7,8]
-# print(overlapping(l1,l2))
+def overlapping(l1,l2):
+    flag=False
+    for i in l1:
+        for j in l2:
+            if i==j:
+                flag=True
+    return flag
+
+l1=[1,2,3,4,5]
+l2=[7,9,6,7,8]
+print(overlapping(l1,l2))
 
 
 # Q.2.In English, present participle is formed by adding suffix -ing to infinite form: go -> going. A simple set of rules can be given as follows:
