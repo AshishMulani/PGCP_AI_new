@@ -21,17 +21,15 @@ class User:
         print('3)Exit')
         while True:
 
-            choice=int(input('Enter Choice: '))
-
-
             try:
+                choice = int(input('Enter Choice: '))
+
                 if choice==1:
-                    bal = transaction.deposit_to_account(sap)
-
-
-                    # msg=f'Deposited amount: {amt} | Balance: {bal}'
-                    # print(msg)
-                    # self._statement.append(msg)
+                    amt = int(input('Enter amount to deposit: '))
+                    bal = self._transaction.deposit_to_account(self._account,amt)
+                    msg=f'Deposited amount: {amt} | {bal}'
+                    print(msg)
+                    self._statement.append(msg)
 
                 elif choice == 2:
                     amt = int(input('Enter amount to withdraw: '))

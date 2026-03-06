@@ -16,6 +16,7 @@ class AccountTypeError(Exception):
 class MoreMoneyError(Exception):
     pass
 
+
 class Account(ABC):
     def __init__(self,accid,name,balance):
         self._accid=accid
