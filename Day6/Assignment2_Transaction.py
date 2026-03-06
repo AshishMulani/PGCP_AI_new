@@ -8,13 +8,12 @@ class Transaction:
 
     @staticmethod
     def deposit_to_account(account: Account, amount):
-        amt = int(input('Enter amount to deposit: '))
-        print(f'Balance after deposit: {account.deposit(amount)}')
+        return f'Balance after deposit: {account.deposit(amount)}'
 
     @staticmethod
     def withdraw_from_account(account : Account,amount):
 
-        print(f'Balance after withdraw: {account.withdraw(amount)}')
+        return f'Balance after withdraw: {account.withdraw(amount)}'
 
 
 
