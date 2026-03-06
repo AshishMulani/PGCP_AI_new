@@ -7,12 +7,16 @@ from Assignment2_Accounts import(Account,SavingsAccount,CurrentAccount)
 class Transaction:
 
     @staticmethod
-    def withdraw_from_account(account : Account,amount):
-        print(f'Balance after withdraw: {account.withdraw(amount)}')
+    def deposit_to_account(account: Account, amount):
+        amt = int(input('Enter amount to deposit: '))
+        print(f'Balance after deposit: {account.deposit(amount)}')
 
     @staticmethod
-    def deposit_to_account(account: Account,amount):
-        print(f'Balance after deposit: {account.deposit(amount)}')
+    def withdraw_from_account(account : Account,amount):
+
+        print(f'Balance after withdraw: {account.withdraw(amount)}')
+
+
 
 # sap=SavingsAccount(101,'Pranita',80000,'personal')
 # sac=SavingsAccount(101,'Dhriti',180000,'corporate')
