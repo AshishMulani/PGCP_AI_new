@@ -13,7 +13,6 @@ class TemperatureSensor:
             print(f'current temperature {self._temp}')
 
 
-
 sensor=TemperatureSensor()
 
 try:
