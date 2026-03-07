@@ -1,7 +1,7 @@
 import sqlite3
 from sqlite3 import Error
 
-def connect_db(path):
+def connect_db(path):  #DML Query
     con=None
     try:
         con=sqlite3.connect(path)
@@ -10,7 +10,7 @@ def connect_db(path):
     except Error as e:
         print(e)
 
-def execute_query(con,query):
+def execute_query(con,query):  #DDL Query
     try:
         cursor=con.cursor()
         cursor.execute(query)

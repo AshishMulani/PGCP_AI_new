@@ -67,7 +67,7 @@ WHERE EmployeeID = 2;
 select = '''SELECT * FROM Employees;'''
 
 
-connection = connect_db("root", "root", "yourdbname")
+connection = connect_db("root", "root", "testdb")
 
 execute_query(connection, create_table)
 execute_query(connection, insert)
