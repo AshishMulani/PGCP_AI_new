@@ -1,4 +1,4 @@
-# Create user class with user interface that gives 2 menu options
+# Create user with user interface that gives 2 menu options
 # 1. Deposit
 # 2. Withdraw
 # Both options will ask user to enter money to withdraw/deposit
@@ -8,50 +8,63 @@
 from Assignment2_Accounts import(Account,SavingsAccount,CurrentAccount)
 from Assignment2_Transaction import Transaction
 
-class User:
-    def __init__(self,account):
-        self._account=account
-        self._transaction=Transaction()
-        self._statement=[]
+if __name__=='__main__':
+    statement=[]
+    print('-------- Choose Account Type --------')
+    print('1)Personal Savings')
+    print('2)Corporate Savings')
+    print('3)Current')
 
-    def menu(self):
-        print('-------- Bank Menu --------')
-        print('1)Deposit')
-        print('2)Withdraw')
-        print('3)Exit')
-        while True:
+    ch = int(input('Enter Choice: '))
 
-            try:
-                choice = int(input('Enter Choice: '))
+    if ch == 1:
+        acc = SavingsAccount(101, 'Pranita', 80000, 'personal')
+    elif ch == 2:
+        acc = SavingsAccount(101, 'Dhriti', 180000, 'corporate')
+    elif ch == 3:
+        acc = CurrentAccount(101, 'Ashish', 280000)
+    else:
+        print('Invalid account type')
+        exit()
 
-                if choice==1:
-                    amt = int(input('Enter amount to deposit: '))
-                    bal = self._transaction.deposit_to_account(self._account,amt)
-                    msg=f'Deposited amount: {amt} | {bal}'
-                    print(msg)
-                    self._statement.append(msg)
+    print('----------------------')
+    print(acc)
 
-                elif choice == 2:
-                    amt = int(input('Enter amount to withdraw: '))
-                    bal = self._transaction.withdraw_from_account(self._account, amt)
-                    msg = f'Withdraw amount: {amt} | Balance: {bal}'
-                    print(msg)
-                    self._statement.append(msg)
+    print('-------- Bank Menu --------')
+    print('1)Deposit')
+    print('2)Withdraw')
+    print('3)Exit')
+    while True:
+        try:
+            choice = int(input('Enter Choice: '))
 
-                elif choice==3:
-                    break
+            if choice==1:
+                amt = int(input('Enter amount to deposit: '))
+                bal = Transaction.deposit_to_account(acc,amt)
+                msg=f'Deposited amount: {amt} | {bal}'
+                # print(msg)
+                statement.append(msg)
 
-                else:
-                    print('Invalid Choice')
+            elif choice == 2:
+                amt = int(input('Enter amount to withdraw: '))
+                bal = Transaction.withdraw_from_account(acc, amt)
+                msg = f'Withdraw amount: {amt} | Balance: {bal}'
+                # print(msg)
+                statement.append(msg)
 
-            except Exception as e:
-                print(e)
-        self.display_statement()
+            elif choice==3:
+                break
+
+            else:
+                print('Invalid Choice')
+
+        except Exception as e:
+            print(e)
 
 
-    def display_statement(self):
-        for s in self._statement:
-            print(s)
+    print('Transactional Statements')
+    for message in statement:
+        print(message)
 
-sap=SavingsAccount(101,'Pranita',80000,'corporate')
-User(sap).menu()
+
+

@@ -47,7 +47,7 @@ class SavingsAccount(Account):
     def withdraw(self,amount):
         if self._type.lower()=='personal':
             if self._balance-amount<5000:
-                raise MinBalanceError('Cannot withdraw:Account below min balance')
+                raise MinBalanceError('Cannot withdraw:Account bellow min balance')
             else:
                 self._balance=self._balance-amount
             return self._balance
