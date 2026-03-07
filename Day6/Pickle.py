@@ -33,3 +33,4 @@ with open('Employee.pkl','rb') as fr:
 
 for emp in employee_data:
     print(emp)
+
