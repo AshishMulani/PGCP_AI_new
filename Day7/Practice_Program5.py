@@ -21,10 +21,13 @@ def connect_db(path):  #DML Query
     except Error as e:
         print(e)
 
-def execute_query(con,query):  #DDL Query
+def execute_query(con,query,data=None):  #DDL Query
     try:
         cursor=con.cursor()
-        cursor.execute(query)
+        if data:
+            cursor.execute(query, data)
+        else:
+            cursor.execute(query)
         con.commit()
         print('Query Successful')
     except Error as e:
@@ -46,52 +49,71 @@ def close_connection(con):
     except Error as e:
         print(e)
 
+drop_table = '''DROP TABLE IF EXISTS Books;'''
 
-create_table='''CREATE TABLE IF NOT EXISTS Books
-(BookID INTEGER PRIMARY KEY AUTOINCREMENT,
-    BookName TEXT NOT NULL,
-    Price INTEGER 
+create_table = '''
+CREATE TABLE IF NOT EXISTS Books (
+    isbn INTEGER PRIMARY KEY,
+    title TEXT NOT NULL,
+    author TEXT NOT NULL,
+    price INTEGER
 );'''
 
-add_users='''INSERT INTO Books (BookName, Price)
-VALUES
-('John', 30),
-('Jane', 25),
-('Alice', 28);'''
-
-update_user = '''
-UPDATE User
-SET Price = 31
-WHERE BookName = 'John';
+insert_books = '''
+INSERT OR IGNORE INTO Books (isbn, title, author, price) VALUES 
+(101, 'Python Basics', 'John Doe', 450),
+(102, 'Advanced AI', 'Jane Smith', 800),
+(103, 'Data Science', 'Alice Brown', 600);
 '''
 
-delete_user = '''
-DELETE FROM User
-WHERE BookName = 'Alice';
-'''
+insert_book_query = "INSERT OR IGNORE INTO Books (isbn, title, author, price) VALUES (?, ?, ?, ?);"
+new_book_data = (104, 'Machine Learning 101', 'Chris Evans', 450)
 
-select_users = '''
-SELECT * FROM User;
-'''
+select_all = "SELECT * FROM Books;"
 
-path='D:\\PGCP_AI_new\\Day7\\Users.sqlite3'
-connection=connect_db(path)
+update_price = "UPDATE Books SET price = 550 WHERE isbn = 101;"
 
-# execute_query(connection, drop_table)
-execute_query(connection,create_table)
-execute_query(connection,add_users)
+delete_book = "DELETE FROM Books WHERE isbn = 103;"
+
+select_expensive = "SELECT * FROM Books WHERE price > 500;"
 
 
-users=execute_read_query(connection,select_users)
-for user in users:
-    print(user)
+path = 'D:\\PGCP_AI_new\\Day7\\books_database.sqlite3'
+connection = connect_db(path)
 
-execute_query(connection,update_user)
-users=execute_read_query(connection,select_users)
-for user in users:
-    print(user)
+execute_query(connection, drop_table)
+execute_query(connection, create_table)
 
-execute_query(connection,delete_user)
-users=execute_read_query(connection,select_users)
-for user in users:
-    print(user)
+execute_query(connection, insert_books)
+print("--- Books Before Insertion ---")
+for book in execute_read_query(connection, select_all):
+    print(book)
+
+print("\n--- Inserting New Book ---")
+
+execute_query(connection, insert_book_query, new_book_data)
+print("--- Books After Insertion ---")
+for book in execute_read_query(connection, select_all):
+    print(book)
+
+
+print("\n--- Updating Price ---")
+execute_query(connection, update_price)
+for book in execute_read_query(connection, select_all):
+    print(book)
+
+print("\n--- Deleting ---")
+execute_query(connection, delete_book)
+for book in execute_read_query(connection, select_all):
+    print(book)
+
+print("\n--- Books with Price > 500 ---")
+for book in execute_read_query(connection, select_expensive):
+    print(book)
+
+if connection:
+    connection.close()
+
+
+
+
