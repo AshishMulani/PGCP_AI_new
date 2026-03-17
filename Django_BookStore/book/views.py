@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Book
 
@@ -29,4 +30,19 @@ def home(request):
 def about(request):
     return render(request, 'book/about.html',{'title':'About'})
 
-#def about(request):
+def book_details(request,book_id):
+    book=get_object_or_404(Book, id=book_id)
+    return render(request, 'book/book_details.html', context={'book':book})
+
+def register(request):
+    if request.method=='POST':
+        form=UserCreationForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+        return redirect('book-home')
+
+    else:
+        form=UserCreationForm()
+        return render(request, 'book/register.html', {'title':'Register', 'form':form})
+
